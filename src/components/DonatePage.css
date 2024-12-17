@@ -1,0 +1,190 @@
+/* General styles */
+.donate-page {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Header Section */
+  .headers {
+    background-color: #c77a2c;
+    padding: 20px;
+    padding-top: 100px;
+    color: #fff;
+  }
+  
+  .headers h1 {
+    font-size: 2.5rem
+  }
+  
+  .headers .highlight {
+    color: #fdd9b5;
+  }
+  
+  .headers p {
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.6;
+    
+    width: 70%; /* Set desired width, e.g., 60% of the parent container */
+    margin-left: auto; /* Center align horizontally */
+    margin-right: auto; /* Center align horizontally */
+    text-align: center; /* Align text to the center */
+  }
+  
+  
+  /* Trusted Partners Section */
+  .trusted-partners {
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .trusted-partners h2 {
+    font-size: 2rem;
+    color: #000;
+  }
+  
+  .partner-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .partner-logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .partner-details {
+    text-align: left;
+    flex: 1;
+    margin: 0 20px;
+    font-size: 1rem;
+  }
+  
+  .partner-details a {
+    text-decoration: none;
+    color: #0073e6;
+  }
+  
+  .g-cash {
+    color: #0073e6;
+    font-weight: bold;
+  }
+  
+  .donate-btn {
+    background-color: #c77a2c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .donate-btn:hover {
+    background-color: #a65f1a;
+  }
+
+  /* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dim background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    max-height: 95%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 0px;
+    color: #c77a2c;
+  }
+  
+  .modal-content label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0px;
+    margin-left: 20px; /* Adjust this if needed for consistent padding */
+    font-size: 1rem;
+}
+
+.modal-content input,
+.modal-content select {
+    width: calc(100% - 40px); /* Ensures consistent spacing relative to label */
+    padding: 8px;
+    margin-top: 0px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+  
+  
+  .close-btn,
+  .confirm-btn{
+    background-color: #c77a2c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .confirm-btn:hover,
+  .close-btn:hover {
+    background-color: #a65f1a;
+  }
+
+  .qr-modal img {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .qr-modal .close-btn {
+    background-color: #c77a2c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .qr-modal .close-btn:hover {
+    background-color: #a65f1a;
+  }
+  
+  
+  

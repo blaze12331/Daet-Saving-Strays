@@ -1,0 +1,296 @@
+/* Header Section */
+.adoption-header {
+  background-image: url('../assets/adoptbg.png'); /* Replace with the correct path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.adoption-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.adoption-header p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+/* Cards Section */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #f9f5f2;
+}
+
+/* Selected Card Styles */
+.card-selected {
+  background-color: #d8a97d; /* Light brown */
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  color: white
+  
+}
+
+/* When the card is selected, text will become white */
+/* When the card is selected, text will become white */
+.card-selected .card-name,
+.card-selected .card-description,
+.card-selected .card-story {
+  color: white !important; /* Use !important to force the color to be white */
+}
+
+/* Default state when card is not selected */
+.card .card-name,
+.card .card-description,
+.card .card-story {
+  color: #333 !important; /* Default text color is black */
+}
+
+
+.card:hover {
+  transform: translateY(-10px);
+  background-color: #d8a97d;
+  color: white;
+}
+
+.card-selected .adopt-button {
+  background-color: #ff914d; /* Button color stays consistent */
+  color: white;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  padding: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.card-name {
+  font-size: 1.5rem;
+  color: #6b4f35; /* Default card text color */
+  margin: 0.5rem 0;
+}
+
+.card-description {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444; /* Default text color */
+}
+
+.card-story {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 1rem 0;
+}
+
+.adopt-button {
+  background-color: #ff914d;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.adopt-button:hover {
+  background-color: #e57c3a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 80%;
+  }
+
+  .adoption-header h1 {
+    font-size: 2rem;
+  }
+
+  .adoption-header p {
+    font-size: 1rem;
+  }
+}
+
+
+/* Modal Container */
+/* Modal Container */
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px; /* Adjust modal width */
+  margin: auto;
+
+  /* Make modal scrollable */
+  max-height: 80vh; /* Adjust height relative to the viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.modal-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.modal-header p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  margin-top: 0.25rem;
+}
+
+/* Scrollbar styling for better appearance */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light grey background */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar color */
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+/* Form Group Styling */
+.form-group {
+  margin: 1rem 0;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.confirm-btn,
+.close-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.confirm-btn {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.confirm-btn:hover {
+  background-color: #45a049;
+}
+
+.close-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.close-btn:hover {
+  background-color: #bbb;
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 1rem;
+    max-height: 90vh; /* Allow more space for smaller screens */
+  }
+
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .confirm-btn,
+  .close-btn {
+    width: 100%;
+  }
+}

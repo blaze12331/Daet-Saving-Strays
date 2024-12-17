@@ -1,0 +1,208 @@
+/* General Styles */
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Container */
+.e-event-container {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 30px auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+}
+
+/* Tabs */
+.e-event-header {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.e-tab {
+  border: none;
+  background: #d4af83;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.e-tab.active {
+  background: #8b5a2b;
+}
+
+.e-tab:hover {
+  transform: translateY(-2px);
+  background: #b57e4d;
+}
+
+/* File Upload Section */
+/* File Upload Section */
+.file-upload {
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative; /* For positioning the image */
+  height: 150px;
+  width: 50%; /* Set a consistent height for the box */
+  display: flex;
+  margin-left: 150px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent overflow issues */
+}
+
+.file-upload img {
+  width: 100%; /* Take the full width */
+  height: 100%; /* Take the full height */
+  object-fit: contain; /* Maintain aspect ratio */
+  position: absolute; /* Allow overlay placement */
+  top: 0;
+  left: 0;
+}
+
+@keyframes imageUploadAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.8); /* Start small */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* End at normal size */
+  }
+}
+.file-label {
+  font-weight: bold;
+  color: #f39c6b;
+  cursor: pointer;
+  z-index: 1; /* Keep label visible above the image */
+}
+
+.file-upload input {
+  display: none; /* Hide the input field */
+}
+
+
+/* Image Preview */
+.image-preview {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-preview img {
+  width: 100%; /* Make the image responsive */
+  max-width: 250px; /* Limit maximum size */
+  height: auto; /* Maintain original aspect ratio */
+  object-fit: contain; /* Prevent image distortion */
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Input Fields */
+.e-event-input,
+.e-event-textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.e-event-input:focus,
+.e-event-textarea:focus {
+  border-color: #f39c6b;
+  outline: none;
+}
+
+/* Save Button */
+.e-save-btn {
+  background: linear-gradient(90deg, #8b5a2b, #6b4620);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.e-save-btn:hover {
+  transform: scale(1.05);
+  background: #6b4620;
+}
+
+/* Upcoming Events */
+.e-upcoming-events {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+.event-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%; /* Ensures it stretches across 100% */
+  margin-bottom: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Prevents padding from affecting the width */
+}
+
+.event-image {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.circle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.icon {
+  font-size: 20px;
+  color: #8b5a2b;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.icon:hover {
+  color: #6b4620;
+}

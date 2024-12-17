@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Header Container */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    margin-top: 10px;
+    margin-left: 110px;
+    width: 80%;
+    border-bottom: 6px solid #e89d5c;
+    font-family: 'Montserrat', sans-serif; /* Ensure header uses Montserrat */
+}
+  
+/* Logo */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+}
+  
+/* Navigation Links */
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 75px;
+    margin-left: 10px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 5px; /* Space for the underline */
+    transition: color 0.3s ease; /* Smooth color transition */
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; /* Initially, no width */
+    height: 2px;
+    background-color: #e89d5c; /* Underline color */
+    transition: width 0.3s ease; /* Smooth underline animation */
+  }
+  
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%; /* Expand to full width on hover/active */
+  }
+  
+  .nav-links a.active {
+    color: #e89d5c; /* Active link color */
+    font-weight: bold;
+  }
+  
+  
+  /* User Actions */
+  .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+  
+.logout-btn {
+    background-color: #8c5f36;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+  
+.logout-btn:hover {
+    background-color: #6f4728;
+}

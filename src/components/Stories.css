@@ -1,0 +1,244 @@
+/* General Container */
+.stories-container {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Heading Styling */
+  .stories-heading {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-top: 300px;
+    color: #000;
+    margin-bottom: 10px;
+  }
+  
+  .stories-text {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 80px;
+    line-height: 1.5;
+  }
+  
+  /* Stories Grid */
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+    gap: 40px; /* Larger gap for clarity */
+    align-items: start; /* Align content vertically */
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
+  /* Story Card */
+  .story-card {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    text-align: left;
+  }
+  
+  .story-image {
+    width: 50%; /* Image takes up half the card */
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .story-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .story-content h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .story-content p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+  
+  .read-more {
+    color: #0073e6;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .read-more:hover {
+    text-decoration: underline;
+  }
+  
+  /* Align Heading and Text to the Left */
+  .stories-headings {
+    text-align: left; /* Align to the left */
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 300px;
+    color: #000;
+  }
+  
+  .stories-texts {
+    text-align: left; /* Align to the left */
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 50px; /* Adjust spacing */
+    line-height: 1.5;
+  }
+  
+  /* Donation Section */
+  .donation-section {
+    margin-top: 100px;
+    text-align: center;
+    padding: 50px 20px;
+    border-radius: 8px;
+    animation: fadeIn 1.5s ease-out; /* Fade-in animation on load */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .donation-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    animation: slideIn 1s ease-out; /* Heading animation */
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .donation-text {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    animation: fadeInText 1.2s ease-out; /* Text animation */
+  }
+  
+  @keyframes fadeInText {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .donation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .donate-now,
+  .learn-more {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Button Hover Animation */
+  .donate-now:hover,
+  .learn-more:hover {
+    transform: scale(1.1); /* Slightly enlarge the button */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+  }
+  
+  /* Donate Now Button */
+  .donate-now {
+    background-color: #CB8A42;
+    color: white;
+  }
+  
+  .donate-now:hover {
+    background-color: #CB8A42;
+  }
+  
+  /* Learn More Button */
+  .learn-more {
+    background-color: white;
+    color: #0073e6;
+    border: 2px solid #0073e6;
+  }
+  
+  .learn-more:hover {
+    background-color: #e6f0ff;
+  }
+  
+  
+  .learn-more:hover {
+    background-color: #e6f0ff;
+  }
+  
+  .donate-now:focus,
+  .learn-more:focus {
+    outline: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .stories-grid {
+      grid-template-columns: 1fr; /* Single column on smaller screens */
+      gap: 20px;
+    }
+  
+    .stories-heading {
+      font-size: 3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .stories-text {
+      font-size: 1.2rem;
+    }
+  
+    .stories-container {
+      padding: 0 10px;
+    }
+  
+    .story-content h3 {
+      font-size: 1rem;
+    }
+  
+    .read-more {
+      font-size: 0.9rem;
+    }
+  }
+  

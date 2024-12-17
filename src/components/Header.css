@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: white;
+  position: fixed;
+  width: 97%;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(107, 79, 53, 0.5);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 150px;
+  margin-left: 50px;
+  height: auto;
+}
+
+/* General styles for links */
+/* General styles for links */
+.nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 2rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  position: relative; /* Needed for the line positioning */
+  transition: color 0.3s ease-in-out;
+}
+
+/* Line effect for active link */
+.nav .active-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; /* Place the line just below the text */
+  left: 0;
+  width: 100%; /* Full width of the link */
+  height: 2px; /* Height of the line */
+  background-color: white; /* White line color */
+  transform: scaleX(1); /* Show the line */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hide the line for inactive links */
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transform: scaleX(0); /* Hide the line */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Show the line only on hover for inactive links */
+.nav a:hover::after {
+  transform: scaleX(1); /* Reveal the line */
+}
+
+/* Ensure active link retains white line */
+.nav .active-link {
+  color: white; /* Optional: keep the active link styled distinctly */
+}
+
+
+
+.adopt-btn {
+  background-color: #6b4f35;
+  color: white;
+  margin-right: 50px;
+  border: 2px solid white;
+  border-radius: 2px;
+  padding: 0.7rem 1.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.adopt-btn:hover {
+  background-color: #543a27;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+/* Media query for tablet devices */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .logo {
+    justify-content: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .logo-img {
+    width: 120px;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .nav a {
+    margin: 0 1rem;
+    font-size: 0.9rem; /* Smaller font size for links */
+  }
+
+  .adopt-btn {
+    margin: 1rem auto 0 auto;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.8rem; /* Smaller font size for button */
+  }
+
+  /* Reduce overall text size */
+  body {
+    font-size: 0.9rem; /* Smaller default font size for the body */
+  }
+}
+
+/* Media query for very small devices (optional) */
+@media (max-width: 576px) {
+  .nav a {
+    font-size: 0.8rem; /* Further reduce link font size */
+  }
+
+  .adopt-btn {
+    font-size: 0.7rem; /* Further reduce button font size */
+    padding: 0.5rem 1.2rem; /* Adjust padding */
+  }
+}

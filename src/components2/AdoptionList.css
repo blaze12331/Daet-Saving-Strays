@@ -1,0 +1,272 @@
+/* Container */
+  
+  /* Header Section */
+  .al-header {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically (if needed) */
+    text-align: center;
+    background-color: red; /* Example background color */
+    padding: 20px; /* Add spacing inside the header */
+    border-radius: 8px;
+  }
+  
+  .al-header-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* Adoption List Container */
+  .al-adoption-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 96%;
+    min-height: 100vh;
+  }
+  
+  /* Title */
+  .al-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Summary Card */
+  .al-summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8c694;
+    border-radius: 16px;
+    width: 300px;
+    margin: 20px auto 40px;
+    padding: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .al-adoption-count {
+    font-size: 52px;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .al-adoption-text {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  /* Applications Grid */
+  /* Applications Grid */
+.al-applications-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 24px; /* Spacing between cards */
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Application Card */
+.al-application-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* Take full column width */
+  margin: 0; /* Remove margins that cause overflow */
+}
+
+.al-application-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Left - Image */
+.al-card-left {
+  flex: 0 0 40%; /* Image occupies 40% */
+  height: 100%; /* Match card height */
+  overflow: hidden;
+}
+
+.al-pet-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.al-applications-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Two cards per row */
+  gap: 24px; /* Spacing between cards */
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+  
+  /* Application Card */
+/* Application Card */
+.al-application-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* Take full column width */
+  margin: 0; /* Remove margins that cause overflow */
+}
+
+.al-application-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Left - Image */
+.al-card-left {
+  flex: 0 0 40%; /* Image occupies 40% of the card */
+  height: 100%; /* Match card height */
+  overflow: hidden;
+}
+
+.al-pet-image {
+  width: 100%; /* Take full width of container */
+  height: 100%; /* Take full height */
+  object-fit: cover; /* Ensure the image scales without distortion */
+}
+
+/* Card Right - Details */
+.al-card-right {
+  flex: 1; /* Occupy remaining space */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.al-card-right h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.al-card-right p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.al-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.al-approve-btn,
+.al-decline-btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.al-approve-btn {
+  background-color: #00bfff;
+  color: white;
+}
+
+.al-approve-btn:hover {
+  background-color: #0099cc;
+}
+
+.al-decline-btn {
+  background-color: #e0e0e0;
+  color: #555;
+}
+
+.al-decline-btn:hover {
+  background-color: #b3b3b3;
+}
+
+  
+  .al-pet-details,
+  .al-description,
+  .al-applicant-info,
+  .al-reason {
+    font-size: 15px;
+    margin: 8px 0;
+    color: #555;
+  }
+  
+  .al-email {
+    color: #888;
+    font-size: 13px;
+  }
+  
+  .al-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .al-decline-btn,
+  .al-approve-btn {
+    flex: 1;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .al-decline-btn {
+    background-color: #e0e0e0;
+    color: #555;
+  }
+  
+  .al-decline-btn:hover {
+    background-color: #b3b3b3;
+  }
+  
+  .al-approve-btn {
+    background-color: #00bfff;
+    color: white;
+  }
+  
+  .al-approve-btn:hover {
+    background-color: #0099cc;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .al-application-card {
+      flex-direction: column;
+    }
+  
+    .al-card-left {
+      height: 200px;
+    }
+  
+    .al-summary-card {
+      width: 100%;
+    }
+  }
+  

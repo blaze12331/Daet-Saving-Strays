@@ -1,0 +1,223 @@
+/* AboutUs.css */
+
+.au-about-us-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+}
+
+.au-image-section {
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+}
+
+.au-team-image {
+    width: 100%;
+    height: 90%;
+    margin-top: 40px;
+    border-radius: 10px;
+}
+
+.au-content-section {
+    flex: 2;
+    min-width: 300px;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 26px; /* Slightly larger heading size */
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif; /* Ensure Montserrat for headings */
+}
+
+p {
+    font-size: 18px; /* Slightly larger paragraph size */
+    line-height: 1.8; /* Improve readability */
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif; /* Ensure Montserrat for paragraphs */
+}
+
+.au-stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.au-stat-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    font-family: 'Montserrat', sans-serif; /* Apply Montserrat to stat items */
+}
+
+.au-stat-item:hover {
+    background-color: #6b4f35;
+    color: white;
+    transform: scale(1.05);
+}
+
+.au-stat-item h3 {
+    font-size: 20px; /* Slightly larger stat headings */
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif; /* Ensure Montserrat for stat headings */
+}
+
+.au-stat-item p {
+    font-size: 16px; /* Larger stat paragraph text */
+    color: #555;
+    font-family: 'Montserrat', sans-serif; /* Ensure Montserrat for stat paragraphs */
+}
+
+.au-stat-item:hover p,
+.au-stat-item:hover h3 {
+    color: white;
+}
+
+
+  .au-rescue-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    align-items: center;
+  }
+  
+  .au-rescue-text-container {
+    flex: 1 1 60%; /* Default width ratio for text */
+    max-width: 100%; /* Ensure container fits within screen size */
+    background-color: #f8f8f8; /* Light background color */
+    padding: 30px; /* Increased padding for more height */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-right: 20px; /* Space between text and image container */
+    box-sizing: border-box; /* Ensure padding fits within width */
+    min-height: 430px; /* Add a minimum height for consistent appearance */
+    font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+  }
+  
+  .au-rescue-text h2 {
+    font-size: 32px; /* Slightly larger for headings */
+  }
+  
+  .au-rescue-text p {
+    font-size: 18px; /* Slightly larger for paragraph text */
+    line-height: 1.8; /* Adjust line spacing for better readability */
+  }
+  
+  
+  
+  .au-rescue-text {
+    padding: 10px;
+  }
+  
+
+  
+  .au-rescue-images {
+    flex: 1 1 35%; /* Default width ratio for images */
+    display: grid;
+    max-width: 100%; /* Ensure images fit screen */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsive grid */
+    gap: 10px; /* Space between images */
+    box-sizing: border-box; /* Consistent padding/borders */
+  }
+  
+  .au-rescue-images img {
+    width: 100%; /* Ensure images scale */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  @media (max-width: 768px) {
+    .au-rescue-text-container, .au-rescue-images {
+      flex: 1 1 100%; /* Stacks elements vertically on smaller screens */
+      margin-right: 0; /* Remove right margin */
+    }
+  
+    .au-rescue-text-container {
+      margin-bottom: 20px; /* Add spacing between sections */
+    }
+  }
+  
+  .au-rehome-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px; /* Adjust as needed */
+    background-image: url('../assets/rehome.png'); /* Use the uploaded image */
+    background-size: cover; /* Ensure the image covers the entire section */
+    background-position: center; /* Center the image */
+    margin-top: 20px;
+    border-radius: 10px;
+    color: white; /* Ensure text is visible */
+    text-align: center;
+}
+
+.au-rehome-content {
+    background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent overlay */
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 100%; /* Ensure the content doesn't overflow */
+    width: 100%; /* Make it stretch across the entire parent container */
+    box-sizing: border-box; /* Include padding in the total size */
+    height: 100%; /* Fill the height of the parent container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+  
+  .au-rehome-content h1 {
+    font-size: 36px; /* Larger heading size */
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .au-highlight {
+    color: #ff3b3f; /* Red color for emphasis */
+  }
+  
+  .au-rehome-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .au-rehome-options {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .au-rehome-option {
+    background-color: #ffffff; /* White background for contrast */
+    color: #333; /* Dark text for readability */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 200px; /* Fixed width for options */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .au-rehome-option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .au-rehome-option h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .au-rehome-option p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  
