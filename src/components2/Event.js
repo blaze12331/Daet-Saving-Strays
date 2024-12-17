@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "react-modal";
 import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Import icons
 import "./Event.css";
@@ -24,29 +24,19 @@ const Event = () => {
       description: "A hands-on workshop to learn React fundamentals.",
       image: "https://via.placeholder.com/150",
     },
-    {
-      title: "Networking Event",
-      date: "2024-09-10T18:00",
-      description: "A meetup for professionals to connect and share ideas.",
-      image: "https://via.placeholder.com/150",
-    },
   ]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState(null);
-  const [editIndex, setEditIndex] = useState(null); // Track the index of the event being edited
 
-  const handleSave = () => {
-    const newEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
-    setUpcomingEvents([...upcomingEvents, newEvent]);
-    alert("Event saved successfully!");
-    resetForm();
-  };
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+
+  const fileInputRef = useRef(null); // Ref for file input
 
   const resetForm = () => {
     setEventTitle("");
     setEventDate("");
     setEventDescription("");
     setImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = ""; // Reset file input
   };
 
   const handleImageChange = (e) => {
@@ -54,14 +44,26 @@ const Event = () => {
     if (file) setImage(URL.createObjectURL(file));
   };
 
+  const handleSave = () => {
+    if (!eventTitle || !eventDate || !eventDescription) {
+      alert("Please fill all fields!");
+      return;
+    }
+    const newEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
+    setUpcomingEvents([...upcomingEvents, newEvent]);
+    resetForm();
+    alert("Event added successfully!");
+  };
+
   const openModal = (event, index) => {
-    setCurrentEvent(event);
     setEditIndex(index);
     setEventTitle(event.title);
     setEventDate(event.date);
     setEventDescription(event.description);
     setImage(event.image);
     setModalIsOpen(true);
+
+    if (fileInputRef.current) fileInputRef.current.value = ""; // Reset file input
   };
 
   const closeModal = () => {
@@ -70,12 +72,16 @@ const Event = () => {
   };
 
   const handleModalSave = () => {
+    if (!eventTitle || !eventDate || !eventDescription) {
+      alert("Please fill all fields!");
+      return;
+    }
     const updatedEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
     const updatedEvents = [...upcomingEvents];
     updatedEvents[editIndex] = updatedEvent;
     setUpcomingEvents(updatedEvents);
-    alert("Event updated successfully!");
     closeModal();
+    alert("Event updated successfully!");
   };
 
   const handleDelete = (index) => {
@@ -89,7 +95,10 @@ const Event = () => {
       <div className="e-event-header">
         <button
           className={`e-tab ${activeTab === "addEvents" ? "active" : ""}`}
-          onClick={() => setActiveTab("addEvents")}
+          onClick={() => {
+            setActiveTab("addEvents");
+            resetForm();
+          }}
         >
           ADD EVENTS
         </button>
@@ -105,9 +114,17 @@ const Event = () => {
       {activeTab === "addEvents" && (
         <div className="e-event-form">
           <div className="file-upload">
-            {!image && <label className="file-label" htmlFor="file-input">+ Upload Image</label>}
-            <input id="file-input" type="file" onChange={handleImageChange} accept="image/*" />
-            {image && <img src={image} alt="Uploaded Preview" />}
+            <label className="file-label" htmlFor="file-input">
+              {image ? "Change Image" : "+ Upload Image"}
+            </label>
+            <input
+              id="file-input"
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              accept="image/*"
+            />
+            {image && <img src={image} alt="Uploaded Preview" className="preview-image" />}
           </div>
           <input
             type="text"
@@ -128,7 +145,9 @@ const Event = () => {
             value={eventDescription}
             onChange={(e) => setEventDescription(e.target.value)}
           ></textarea>
-          <button className="e-save-btn" onClick={handleSave}>SAVE</button>
+          <button className="e-save-btn" onClick={handleSave}>
+            SAVE
+          </button>
         </div>
       )}
 
@@ -137,23 +156,14 @@ const Event = () => {
         <div className="e-upcoming-events">
           {upcomingEvents.map((event, index) => (
             <div className="event-card" key={index}>
-              {/* Event Image */}
               <div className="event-image">
-                <img 
-                  src={event.image || "/default-circle.png"} 
-                  alt="Event" 
-                  className="circle-image" 
-                />
+                <img src={event.image || "/default-circle.png"} alt="Event" className="circle-image" />
               </div>
-
-              {/* Event Details */}
               <div className="event-details" onClick={() => openModal(event, index)}>
                 <h4>Title: {event.title}</h4>
-                <p>Date: {event.date}</p>
+                <p>Date: {new Date(event.date).toLocaleString()}</p>
                 <p>Description: {event.description}</p>
               </div>
-
-              {/* Edit and Delete Icons */}
               <div className="event-icons">
                 <FaEdit className="icon" onClick={() => openModal(event, index)} />
                 <FaTrashAlt className="icon" onClick={() => handleDelete(index)} />
@@ -168,9 +178,17 @@ const Event = () => {
         <h2>Edit Event</h2>
         <div className="e-event-form">
           <div className="file-upload">
-            {!image && <label className="file-label" htmlFor="modal-file-input">+ Upload Image</label>}
-            <input id="modal-file-input" type="file" onChange={handleImageChange} accept="image/*" />
-            {image && <img src={image} alt="Uploaded Preview" />}
+            <label className="file-label" htmlFor="modal-file-input">
+              {image ? "Change Image" : "+ Upload Image"}
+            </label>
+            <input
+              id="modal-file-input"
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              accept="image/*"
+            />
+            {image && <img src={image} alt="Uploaded Preview" className="preview-image" />}
           </div>
           <input
             type="text"
@@ -191,8 +209,12 @@ const Event = () => {
             value={eventDescription}
             onChange={(e) => setEventDescription(e.target.value)}
           ></textarea>
-          <button className="e-save-btn" onClick={handleModalSave}>SAVE CHANGES</button>
-          <button className="e-cancel-btn" onClick={closeModal}>CLOSE</button>
+          <button className="e-save-btn" onClick={handleModalSave}>
+            SAVE CHANGES
+          </button>
+          <button className="e-cancel-btn" onClick={closeModal}>
+            CLOSE
+          </button>
         </div>
       </Modal>
     </div>
