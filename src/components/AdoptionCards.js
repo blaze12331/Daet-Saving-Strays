@@ -149,7 +149,6 @@ const AdoptionCards = () => {
               onError={(e) => (e.target.src = 'https://via.placeholder.com/150')}
             />
             <h3 className="card-name">{pet.name}</h3>
-            <p className="card-description">{pet.description}</p>
             <button onClick={() => handleAdoptClick(pet.id)} className="adopt-button">
               Adopt Me
             </button>

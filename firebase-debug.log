@@ -1,0 +1,117 @@
+[debug] [2024-12-18T07:02:36.906Z] ----------------------------------------------------------------------
+[debug] [2024-12-18T07:02:36.910Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\orend\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2024-12-18T07:02:36.910Z] CLI Version:   13.29.1
+[debug] [2024-12-18T07:02:36.910Z] Platform:      win32
+[debug] [2024-12-18T07:02:36.910Z] Node Version:  v20.15.0
+[debug] [2024-12-18T07:02:36.911Z] Time:          Wed Dec 18 2024 15:02:36 GMT+0800 (Philippine Standard Time)
+[debug] [2024-12-18T07:02:36.911Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-18T07:02:36.914Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-12-18T07:02:36.974Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-18T07:02:36.975Z] > authorizing via signed-in user (lrdrndn51103@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\IOT\Daet-Saving-Strays
+
+[debug] [2024-12-18T07:02:37.453Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-12-18T07:02:37.454Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-12-18T07:02:47.324Z] Checked if tokens are valid: false, expires at: 1734419008912
+[debug] [2024-12-18T07:02:47.325Z] Checked if tokens are valid: false, expires at: 1734419008912
+[debug] [2024-12-18T07:02:47.326Z] > refreshing access token with scopes: []
+[debug] [2024-12-18T07:02:47.327Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-12-18T07:02:47.327Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-12-18T07:02:47.572Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-12-18T07:02:47.572Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-12-18T07:02:47.581Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2024-12-18T07:02:48.240Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2024-12-18T07:02:48.240Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project daet-saving-strays (daet-saving-strays) 
+[info] 
+=== Hosting Setup
+[debug] [2024-12-18T07:02:52.157Z] Checked if tokens are valid: true, expires at: 1734508966573
+[debug] [2024-12-18T07:02:52.157Z] Checked if tokens are valid: true, expires at: 1734508966573
+[debug] [2024-12-18T07:02:52.158Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/daet-saving-strays [none]
+[debug] [2024-12-18T07:02:52.442Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/daet-saving-strays 200
+[debug] [2024-12-18T07:02:52.442Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/daet-saving-strays {"projectId":"daet-saving-strays","projectNumber":"680162784902","displayName":"daet-saving-strays","name":"projects/daet-saving-strays","resources":{"hostingSite":"daet-saving-strays","realtimeDatabaseInstance":"daet-saving-strays-default-rtdb"},"state":"ACTIVE","etag":"1_cf124c5a-bbc3-4096-b04b-5a8603d2661a"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[info] +  Wrote y/404.html 
+[debug] [2024-12-18T07:03:18.657Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2024-12-18T07:03:18.898Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2024-12-18T07:03:18.898Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"11.1.0","browserURL":"https://www.gstatic.com/firebasejs/11.1.0/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/11.1.0/firebase.tgz"},"live":{"version":"11.1","browserURL":"https://www.gstatic.com/firebasejs/live/11.1/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/11.1/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/11.1.0/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/11.1.0/firebase-auth/cordova.js","auth/web-extension":"https://www.gstatic.com/firebasejs/11.1.0/firebase-auth/web-extension.js","functions":"https://www.gstatic.com/firebasejs/11.1.0/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/11.1.0/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/11.1.0/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/11.1.0/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/11.1.0/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/11.1.0/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js","vertexai":"https://www.gstatic.com/firebasejs/11.1.0/firebase-vertexai.js","data-connect":"https://www.gstatic.com/firebasejs/11.1.0/firebase-data-connect.js","firestore.memory":"https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.memory.js"}}
+[info] +  Wrote y/index.html 
+[info] 
+[info] i  Detected a .git folder at D:\IOT\Daet-Saving-Strays 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=525147818&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2024-12-18T07:03:28.896Z] >>> [apiv2][query] POST https://github.com/login/oauth/access_token [none]
+[debug] [2024-12-18T07:03:28.896Z] >>> [apiv2][body] POST https://github.com/login/oauth/access_token [stream]
+[debug] [2024-12-18T07:03:29.392Z] <<< [apiv2][status] POST https://github.com/login/oauth/access_token 200
+[debug] [2024-12-18T07:03:29.393Z] <<< [apiv2][body] POST https://github.com/login/oauth/access_token {"access_token":"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","token_type":"bearer","scope":"read:user,repo"}
+[debug] [2024-12-18T07:03:29.401Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2024-12-18T07:03:29.944Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2024-12-18T07:03:29.944Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"di0scuri","id":118495617,"node_id":"U_kgDOBxAZgQ","avatar_url":"https://avatars.githubusercontent.com/u/118495617?v=4","gravatar_id":"","url":"https://api.github.com/users/di0scuri","html_url":"https://github.com/di0scuri","followers_url":"https://api.github.com/users/di0scuri/followers","following_url":"https://api.github.com/users/di0scuri/following{/other_user}","gists_url":"https://api.github.com/users/di0scuri/gists{/gist_id}","starred_url":"https://api.github.com/users/di0scuri/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/di0scuri/subscriptions","organizations_url":"https://api.github.com/users/di0scuri/orgs","repos_url":"https://api.github.com/users/di0scuri/repos","events_url":"https://api.github.com/users/di0scuri/events{/privacy}","received_events_url":"https://api.github.com/users/di0scuri/received_events","type":"User","user_view_type":"private","site_admin":false,"name":"Lord Orendain","company":null,"blog":"","location":null,"email":null,"hireable":null,"bio":null,"twitter_username":null,"notification_email":null,"public_repos":17,"public_gists":0,"followers":0,"following":0,"created_at":"2022-11-18T01:58:04Z","updated_at":"2024-07-22T02:29:46Z","private_gists":0,"total_private_repos":3,"owned_private_repos":3,"disk_usage":38977,"collaborators":8,"two_factor_authentication":false,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] +  Success! Logged into GitHub as di0scuri 
+[info] 
+[debug] [2024-12-18T07:03:36.247Z] >>> [apiv2][query] GET https://api.github.com/repos/y/actions/secrets/public-key type=owner
+[debug] [2024-12-18T07:03:36.715Z] <<< [apiv2][status] GET https://api.github.com/repos/y/actions/secrets/public-key 404
+[debug] [2024-12-18T07:03:36.715Z] <<< [apiv2][body] GET https://api.github.com/repos/y/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+[info] 
+[info] 
+[error] !  The provided authorization cannot be used with this repository. If this repository is in an organization, did you remember to grant access? 
+[info] 
+[info] i  Action required: Visit this URL to ensure access has been granted to the appropriate organization(s) for the Firebase CLI GitHub OAuth App: 
+[info] https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+[info] 
+[debug] [2024-12-18T07:04:03.157Z] >>> [apiv2][query] GET https://api.github.com/repos/y/actions/secrets/public-key type=owner
+[debug] [2024-12-18T07:04:03.610Z] <<< [apiv2][status] GET https://api.github.com/repos/y/actions/secrets/public-key 404
+[debug] [2024-12-18T07:04:03.610Z] <<< [apiv2][body] GET https://api.github.com/repos/y/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+[info] 
+[info] 
+[error] !  The provided authorization cannot be used with this repository. If this repository is in an organization, did you remember to grant access? 
+[info] 
+[info] i  Action required: Visit this URL to ensure access has been granted to the appropriate organization(s) for the Firebase CLI GitHub OAuth App: 
+[info] https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+[info] 
+[debug] [2024-12-18T07:04:06.862Z] >>> [apiv2][query] GET https://api.github.com/repos/y/actions/secrets/public-key type=owner
+[debug] [2024-12-18T07:04:07.257Z] <<< [apiv2][status] GET https://api.github.com/repos/y/actions/secrets/public-key 404
+[debug] [2024-12-18T07:04:07.257Z] <<< [apiv2][body] GET https://api.github.com/repos/y/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+[info] 
+[info] 
+[error] !  The provided authorization cannot be used with this repository. If this repository is in an organization, did you remember to grant access? 
+[info] 
+[info] i  Action required: Visit this URL to ensure access has been granted to the appropriate organization(s) for the Firebase CLI GitHub OAuth App: 
+[info] https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+[info] 
+[debug] [2024-12-18T07:04:09.320Z] >>> [apiv2][query] GET https://api.github.com/repos/y/actions/secrets/public-key type=owner
+[debug] [2024-12-18T07:04:09.636Z] <<< [apiv2][status] GET https://api.github.com/repos/y/actions/secrets/public-key 404
+[debug] [2024-12-18T07:04:09.636Z] <<< [apiv2][body] GET https://api.github.com/repos/y/actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+[info] 
+[info] 
+[error] !  The provided authorization cannot be used with this repository. If this repository is in an organization, did you remember to grant access? 
+[info] 
+[info] i  Action required: Visit this URL to ensure access has been granted to the appropriate organization(s) for the Firebase CLI GitHub OAuth App: 
+[info] https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+[info] 

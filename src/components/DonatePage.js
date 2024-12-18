@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./DonatePage.css";
+import { db } from "../config/firebase"; // Firebase Firestore configuration
+import { collection, addDoc } from "firebase/firestore";
 import SavingStraysLogo from "../assets/SavingStrays.png";
-import QRCodeImage from "../assets/QRCode.png"; // Import your QR code image
+import QRCodeImage from "../assets/QRCode.jpg"; // Import your QR code image
 
 const DonatePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,24 +16,21 @@ const DonatePage = () => {
     modeOfTransfer: "gcash",
   });
 
-  const [error] = useState("");
+  const [error, setError] = useState("");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const openQRCodeModal = () => setIsQRCodeModalOpen(true);
   const closeQRCodeModal = () => setIsQRCodeModalOpen(false);
 
-  // Input validation functions
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "firstName" || name === "lastName") {
-      // Allow only alphabetic characters
       if (/^[A-Za-z\s]*$/.test(value)) {
         setFormData({ ...formData, [name]: value });
       }
     } else if (name === "contactNumber") {
-      // Allow only numeric values
       if (/^\d*$/.test(value)) {
         setFormData({ ...formData, [name]: value });
       }
@@ -40,20 +39,48 @@ const DonatePage = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const saveDonationToDatabase = async () => {
+    try {
+      const donationRef = collection(db, "donations"); // Firestore collection name: donations
+      const data = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        contactNumber: formData.contactNumber,
+        modeOfTransfer: formData.modeOfTransfer,
+        date: new Date().toISOString(), // Timestamp
+      };
+
+      await addDoc(donationRef, data); // Save to Firestore
+      console.log("Donation info saved:", data);
+    } catch (error) {
+      console.error("Error saving donation info:", error);
+      setError("Failed to save donation information. Please try again.");
+    }
+  };
+
+  const handleSubmit = async () => {
     if (
       formData.firstName.trim() === "" ||
       formData.lastName.trim() === "" ||
       formData.contactNumber.trim() === "" ||
       formData.modeOfTransfer === ""
     ) {
-      window.alert("All fields must be filled before proceeding.");
-    } else {
-      closeModal(); // Close the donation form modal
-      openQRCodeModal(); // Open the QR Code modal
+      setError("All fields must be filled before proceeding.");
+      return;
+    }
+  
+    try {
+      // Save the data to Firestore
+      await saveDonationToDatabase();
+      setError(""); 
+      closeModal();
+      openQRCodeModal();
+    } catch (error) {
+      console.error("Submission error:", error);
+      setError("Failed to process donation. Please try again.");
     }
   };
-
+  
   return (
     <div className="donate-page">
       {/* Header Section */}
@@ -79,9 +106,7 @@ const DonatePage = () => {
           <div className="partner-details">
             <p>
               📧{" "}
-              <a href="mailto:daetsavingstraysofficial@gmail.com">
-                daetsavingstraysofficial@gmail.com
-              </a>
+              <a href="mailto:dsavingstrays.com">dsavingstrays@gmail.com</a>
             </p>
             <p>📍 Daet, Camarines Norte, 4600</p>
             <p>
@@ -94,7 +119,7 @@ const DonatePage = () => {
         </div>
       </div>
 
-      {/* First Modal: Donation Form */}
+      {/* Donation Form Modal */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -139,10 +164,10 @@ const DonatePage = () => {
                 <option value="gcash">GCash</option>
               </select>
             </label>
+            {error && <p className="error-message">{error}</p>}
             <button className="close-btn" onClick={closeModal}>
               Close
             </button>
-            {error && <p className="error-message">{error}</p>}
             <button className="confirm-btn" onClick={handleSubmit}>
               Confirm
             </button>
@@ -150,7 +175,7 @@ const DonatePage = () => {
         </div>
       )}
 
-      {/* Second Modal: QR Code */}
+      {/* QR Code Modal */}
       {isQRCodeModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content qr-modal">

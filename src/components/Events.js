@@ -1,8 +1,85 @@
-import React from "react";
-import "./Events.css"; // Import CSS file for styling
-import EventImage from "../assets/puppies.png"; // Replace with actual image path
+import React, { useEffect, useState } from "react";
+import "./Events.css"; // Import your CSS file for styling
+import { db, realtimeDB } from "../config/firebase"; // Firestore and RTDB configuration
+import { collection, getDocs, query } from "firebase/firestore";
+import { ref, get } from "firebase/database";
+import EventImage from "../assets/puppies.png"; // Default image if no image is available
 
 const Events = () => {
+  const [events, setEvents] = useState([]);
+
+  // Function to fetch upcoming events from Firestore and RTDB
+  const fetchEvents = async () => {
+    console.log("Fetching upcoming events...");
+    try {
+      const firestoreEvents = [];
+      const realtimeEvents = [];
+      const currentDate = new Date();
+
+      // Fetch events from Firestore
+      const eventsRef = collection(db, "events");
+      const querySnapshot = await getDocs(query(eventsRef));
+      for (const docSnap of querySnapshot.docs) {
+        const event = docSnap.data();
+        const eventId = docSnap.id;
+
+        let imageUrl = EventImage; // Default image path
+
+        // Fetch image from RTDB if imagePath exists
+        if (event.imagePath) {
+          const imageRef = ref(realtimeDB, event.imagePath);
+          const imageSnapshot = await get(imageRef);
+          if (imageSnapshot.exists()) {
+            imageUrl = imageSnapshot.val(); // Use fetched image URL
+          }
+        }
+
+        // Add event if it is upcoming
+        if (new Date(event.date) > currentDate) {
+          firestoreEvents.push({
+            id: eventId,
+            title: event.title || "Untitled Event",
+            description: event.description || "No description available.",
+            date: event.date || "TBD",
+            image: imageUrl,
+          });
+        }
+      }
+
+      // Fetch events from Realtime Database
+      const snapshot = await get(ref(realtimeDB, "events"));
+      if (snapshot.exists()) {
+        const eventsFromRTDB = snapshot.val();
+        Object.entries(eventsFromRTDB).forEach(([id, event]) => {
+          if (new Date(event.date) > currentDate) {
+            realtimeEvents.push({
+              id,
+              title: event.title || "Untitled Event",
+              description: event.description || "No description available.",
+              date: event.date || "TBD",
+              image: event.image || EventImage, // Use default image if missing
+            });
+          }
+        });
+      }
+
+      // Combine Firestore and RTDB events, and remove duplicates
+      const combinedEvents = [...firestoreEvents, ...realtimeEvents];
+      const uniqueEvents = Array.from(
+        new Map(combinedEvents.map((event) => [event.id, event])).values()
+      );
+
+      setEvents(uniqueEvents);
+      console.log("Fetched events:", uniqueEvents);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
   return (
     <div className="events-container">
       {/* Image and Text Section */}
@@ -30,18 +107,33 @@ const Events = () => {
 
       {/* Cards Section */}
       <div className="events-cards-section">
-        <div className="event-card">
-          <h3>Charity Walk</h3>
-          <p>
-            Join our annual walk to raise funds for stray animal care.
-          </p>
-        </div>
-        <div className="event-card">
-          <h3>Adoption Fair</h3>
-          <p>
-            Meet and adopt your new furry friend at our adoption fair.
-          </p>
-        </div>
+        {events.length > 0 ? (
+          events.map((event) => (
+            <div key={event.id} className="event-card">
+              <img
+                src={event.image}
+                alt={event.title}
+                className="event-card-image"
+              />
+              <div className="event-card-content">
+                <h3>{event.title}</h3>
+                <p>{event.description}</p>
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(event.date).toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No upcoming events available at the moment.</p>
+        )}
       </div>
 
       {/* Footer Section */}

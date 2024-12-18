@@ -81,15 +81,15 @@ const AdoptionList = () => {
     try {
       console.log("Preparing to send approval email...");
       await emailjs.send(
-        "service_u7x9bn9",
-        "template_7y342qw",
+        "service_px40eri",
+        "template_pl63pnp",
         {
           email: adopterEmail, 
           to_name: to_name,       
           subject: "Approved",
           message: `Congratulations ${to_name}! Your adoption request for ${petName} has been approved. You may now pick ${petName}`,
         },
-        "oi35JCfPg7qO5VrE8"
+        "3PMgbSstllEoAtI76"
       );
       console.log(`Approval email successfully sent to ${adopterEmail} for pet ${petName}`);
     } catch (error) {

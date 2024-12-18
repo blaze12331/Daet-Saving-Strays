@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { auth, googleProvider } from "../config/firebase";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import "./LoginForm.css";
 
 const LoginForm = () => {
@@ -10,9 +9,6 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  // Google Sign-In provider
-  const googleProvider = new GoogleAuthProvider();
 
   // Handle email/password login
   const handleEmailPasswordLogin = async (e) => {
@@ -50,21 +46,6 @@ const LoginForm = () => {
     }
   };
 
-  // Handle Google login
-  const handleGoogleLogin = async () => {
-    try {
-      console.log("Attempting Google login...");
-      await signInWithPopup(auth, googleProvider);
-
-      alert("Logged in successfully with Google!");
-      console.log("Google login successful. Navigating to /petlist");
-      navigate("/petlist");
-    } catch (err) {
-      console.error("Google Login Error Code:", err.code, "Message:", err.message);
-      setError("Failed to sign in with Google. Please try again.");
-    }
-  };
-
   return (
     <div className="login-container">
       <div className="login-box">
@@ -99,18 +80,6 @@ const LoginForm = () => {
             Log in
           </button>
         </form>
-
-        {/* Google Login */}
-        <div className="or-container">
-          <p>or Continue with</p>
-        </div>
-        <div className="social-icons">
-          <FaGoogle
-            className="icon google"
-            onClick={handleGoogleLogin} // Google Login Button
-            style={{ cursor: "pointer" }}
-          />
-        </div>
       </div>
     </div>
   );

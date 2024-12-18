@@ -83,10 +83,9 @@ const Event = () => {
     try {
       const dbEvents = [];
       const realtimeEvents = [];
-
       const currentDate = new Date();
-
-      // Fetch db events
+  
+      // Fetch events from Firestore
       const querySnapshot = await getDocs(collection(db, "events"));
       querySnapshot.forEach((doc) => {
         const event = { id: doc.id, ...doc.data() };
@@ -94,8 +93,8 @@ const Event = () => {
           dbEvents.push(event);
         }
       });
-
-      // Fetch Realtime Database events
+  
+      // Fetch events from Realtime Database
       const snapshot = await get(ref(realtimeDB, "events"));
       if (snapshot.exists()) {
         Object.entries(snapshot.val()).forEach(([id, event]) => {
@@ -104,15 +103,21 @@ const Event = () => {
           }
         });
       }
-
-      // Combine and update the state
+  
+      // Combine and remove duplicates
       const combinedEvents = [...dbEvents, ...realtimeEvents];
-      setUpcomingEvents(combinedEvents);
+      const uniqueEvents = Array.from(
+        new Map(combinedEvents.map((event) => [event.id, event])).values()
+      );
+  
+      setUpcomingEvents(uniqueEvents);
+      console.log("Fetched events:", uniqueEvents);
     } catch (error) {
       console.error("Error fetching events: ", error);
       alert("Failed to fetch events.");
     }
   };
+  
 
   const handleDelete = async (eventId) => {
     try {
