@@ -75,7 +75,7 @@
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 300px;
-  text-align: center;
+  text-align: center; 
   padding: 1.5rem;
   transition: transform 0.3s ease-in-out;
 }
@@ -277,6 +277,55 @@
 .close-btn:hover {
   background-color: #bbb;
 }
+.radio-group {
+  display: flex;
+  justify-content: center; /* Center the radio buttons and labels horizontally */
+  gap: 2rem; /* Add spacing between "No" and "Yes" groups */
+  margin-top: 0.5rem;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: center; /* Center the radio buttons horizontally */
+  gap: 4rem; /* Adds space between No and Yes groups */
+  margin-top: 0.5rem;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center; /* Vertically center text and radio button */
+  gap: 0.5rem; /* Add space between radio button and label */
+}
+
+.reverse-radio {
+  flex-direction: row-reverse; /* Reverse text and radio button for No */
+  text-align: right; /* Ensure "No" text aligns to the right of its button */
+}
+
+.normal-radio {
+  flex-direction: row; /* Default: text to the right of radio button */
+  text-align: left; /* Align "Yes" text to the left of its button */
+}
+/* Form Input and Select Styling */
+.form-group input,
+.form-group select {
+  width: 100%; /* Make dropdowns match input width */
+  padding: 0.75rem; /* Consistent padding */
+  font-size: 1rem; /* Match input font size */
+  border: 1px solid #ccc; /* Standard input border */
+  border-radius: 4px; /* Rounded corners for inputs and dropdowns */
+  outline: none;
+  box-sizing: border-box; /* Ensures consistent sizing */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4CAF50; /* Highlight on focus */
+  box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+}
+
+
+
 
 /* Responsive Modal */
 @media (max-width: 768px) {
@@ -293,4 +342,5 @@
   .close-btn {
     width: 100%;
   }
+
 }

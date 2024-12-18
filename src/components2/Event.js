@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import Modal from "react-modal";
 import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Import icons
+import { collection, doc, setDoc } from "firebase/firestore";
+import { ref, set } from "firebase/database";
+import { db, realtimeDB } from "../config/firebase";
 import "./Event.css";
 
 Modal.setAppElement("#root"); // Required for accessibility
@@ -41,18 +44,52 @@ const Event = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) setImage(URL.createObjectURL(file));
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result); // Base64 string
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!eventTitle || !eventDate || !eventDescription) {
       alert("Please fill all fields!");
       return;
     }
-    const newEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
-    setUpcomingEvents([...upcomingEvents, newEvent]);
-    resetForm();
-    alert("Event added successfully!");
+
+    try {
+      // Generate unique ID for the event
+      const eventId = Date.now().toString();
+      const dbPath = `events/${eventId}`;
+
+      // Save to db
+      await setDoc(doc(db, "events", eventId), {
+        title: eventTitle,
+        date: eventDate,
+        description: eventDescription,
+        imagePath: dbPath, // Path to the image in db
+      });
+
+      // Save to Realtime Database
+      await set(ref(realtimeDB, `events/${eventId}`), {
+        title: eventTitle,
+        date: eventDate,
+        description: eventDescription,
+        image: image, // Save image as base64 string in RTDB
+      });
+
+      // Update local state
+      const newEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
+      setUpcomingEvents([...upcomingEvents, newEvent]);
+      resetForm();
+
+      alert("Event added successfully!");
+    } catch (error) {
+      console.error("Error adding event: ", error);
+      alert("Failed to add event. Please try again.");
+    }
   };
 
   const openModal = (event, index) => {
@@ -154,22 +191,24 @@ const Event = () => {
       {/* Upcoming Events */}
       {activeTab === "upcomingEvents" && (
         <div className="e-upcoming-events">
-          {upcomingEvents.map((event, index) => (
-            <div className="event-card" key={index}>
-              <div className="event-image">
-                <img src={event.image || "/default-circle.png"} alt="Event" className="circle-image" />
+          {upcomingEvents
+            .filter((event) => new Date(event.date) > new Date())
+            .map((event, index) => (
+              <div className="event-card" key={index}>
+                <div className="event-image">
+                  <img src={event.image || "/default-circle.png"} alt="Event" className="circle-image" />
+                </div>
+                <div className="event-details" onClick={() => openModal(event, index)}>
+                  <h4>Title: {event.title}</h4>
+                  <p>Date: {new Date(event.date).toLocaleString()}</p>
+                  <p>Description: {event.description}</p>
+                </div>
+                <div className="event-icons">
+                  <FaEdit className="icon" onClick={() => openModal(event, index)} />
+                  <FaTrashAlt className="icon" onClick={() => handleDelete(index)} />
+                </div>
               </div>
-              <div className="event-details" onClick={() => openModal(event, index)}>
-                <h4>Title: {event.title}</h4>
-                <p>Date: {new Date(event.date).toLocaleString()}</p>
-                <p>Description: {event.description}</p>
-              </div>
-              <div className="event-icons">
-                <FaEdit className="icon" onClick={() => openModal(event, index)} />
-                <FaTrashAlt className="icon" onClick={() => handleDelete(index)} />
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
 

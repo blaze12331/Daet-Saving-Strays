@@ -29,21 +29,28 @@ const PetList = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "pets"), async (snapshot) => {
       const petsData = [];
+  
       for (const doc of snapshot.docs) {
         const petData = { id: doc.id, ...doc.data() };
-
-        // Fetch image from Realtime Database
-        if (petData.imageRef) {
-          const imageSnapshot = await get(dbRef(realtimeDB, `pet-images/${petData.imageRef}`));
-          petData.image = imageSnapshot.val()?.imageData || "";
+  
+        // Filter to include only pets with 'pending' status
+        if (petData.status === "pending") {
+          // Fetch image from Realtime Database if imageRef exists
+          if (petData.imageRef) {
+            const imageSnapshot = await get(dbRef(realtimeDB, `pet-images/${petData.imageRef}`));
+            petData.image = imageSnapshot.val()?.imageData || "";
+          }
+  
+          petsData.push(petData);
         }
-        petsData.push(petData);
       }
+  
       setPets(petsData);
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
 
   const handleAddPet = () => setShowModal(true);
 
@@ -71,30 +78,39 @@ const PetList = () => {
   const handleSavePet = async () => {
     try {
       let imageRefKey = null;
-
+  
       // Save image to Realtime Database
       if (imageFile) {
         const imageDbRef = push(dbRef(realtimeDB, "pet-images"));
         await set(imageDbRef, { imageData: newPet.image });
         imageRefKey = imageDbRef.key;
       }
-
-      // Save pet data to Firestore
+  
+      // Save pet data to Firestore with 'pending' status
       const petData = {
         name: newPet.name,
         breed: newPet.breed,
         age: newPet.age,
         description: newPet.description,
         imageRef: imageRefKey,
+        status: "pending", // Set status as 'pending'
       };
+  
       await addDoc(collection(db, "pets"), petData);
-
+  
+      // Show success pop-up
+      alert("Successfully added pet!");
+  
+      // Reset form and close modal
       setNewPet({ name: "", breed: "", age: "", description: "", image: null });
+      setImageFile(null);
       setShowModal(false);
     } catch (error) {
       console.error("Error adding pet: ", error);
+      alert("Failed to add pet. Please try again.");
     }
   };
+  
 
   const handleEditClick = (pet) => {
     setEditPet({ ...pet });
