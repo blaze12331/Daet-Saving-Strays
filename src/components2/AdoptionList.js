@@ -11,6 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 import { ref, get } from "firebase/database";
+import emailjs from "@emailjs/browser";
 
 const AdoptionList = () => {
   const [applications, setApplications] = useState([]);
@@ -55,7 +56,7 @@ const AdoptionList = () => {
             age: petData.age,
             breed: petData.breed,
             description: petData.description,
-            applicantName: `${adopter.firstName} ${adopter.lastName}`,
+            applicantName: adopter.fullName || "Unknown Applicant", // Use fullName from the database
             email: adopter.emailAddress,
             reason: adopter.reason || "No reason provided.",
             imageUrl,
@@ -68,82 +69,117 @@ const AdoptionList = () => {
     }
   };
 
-  // Function to send email via external SMTP server
-  const sendEmail = async (adopterEmail, petName, emailType) => {
-    try {
-      const response = await fetch("http://localhost:5000/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          adopterEmail,
-          petName,
-          emailType,
-        }),
-      });
+  // Function to send approval email
+  const sendEmailApprove = async (adopterEmail, to_name, petName) => {
+    console.debug("sendEmailApprove called with parameters:", {
+      type: "approved",
+      adopterEmail,
+      to_name,
+      petName,
+    });
 
-      const result = await response.json();
-      if (result.success) {
-        console.log("Email sent successfully:", result.message);
-      } else {
-        console.error("Failed to send email:", result.message);
-      }
+    try {
+      console.log("Preparing to send approval email...");
+      await emailjs.send(
+        "service_u7x9bn9",
+        "template_7y342qw",
+        {
+          email: adopterEmail, 
+          to_name: to_name,       
+          subject: "Approved",
+          message: `Congratulations ${to_name}! Your adoption request for ${petName} has been approved. You may now pick ${petName}`,
+        },
+        "oi35JCfPg7qO5VrE8"
+      );
+      console.log(`Approval email successfully sent to ${adopterEmail} for pet ${petName}`);
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("Error sending approval email:", { error });
     }
   };
 
-  // Function to handle approval
-  const handleApprove = async (adopterId, petId, adopterEmail, petName) => {
+  // Function to send decline email
+  const sendEmailDeny = async (adopterEmail, to_name, petName) => {
+    console.debug("sendEmailDeny called with parameters:", {
+      type: "declined",
+      adopterEmail,
+      to_name,
+      petName,
+    });
+
+    try {
+      console.log("Preparing to send decline email...");
+      await emailjs.send(
+        "service_u7x9bn9",
+        "template_7y342qw",
+        {
+          email: adopterEmail,
+          to_name: to_name,       
+          subject: "Denied",
+          message: `Dear ${to_name}, unfortunately, your adoption request for ${petName} has been declined. Thank you for your understanding.`,
+        },
+        "oi35JCfPg7qO5VrE8"
+      );
+      console.log(`Decline email successfully sent to ${adopterEmail} for pet ${petName}`);
+    } catch (error) {
+      console.error("Error sending decline email:", { error });
+    }
+  };
+
+  // Handle approval
+  const handleApprove = async (adopterId, petId, adopterEmail, adopterName, petName) => {
+    console.log("Starting approval process for adopter:", {
+      adopterId,
+      petId,
+      adopterEmail,
+      adopterName,
+      petName,
+    });
+
     const confirmApprove = window.confirm("Are you sure you want to approve this application?");
     if (confirmApprove) {
       try {
-        // 1. Update approved adopter's status
+        console.log("Updating adopter's status to 'approved'...");
         const adopterRef = doc(db, "adopters", adopterId);
         await updateDoc(adopterRef, { status: "approved" });
 
-        // 2. Update pet status to adopted
+        console.log("Updating pet's status to 'adopted'...");
         const petRef = doc(db, "pets", petId);
         await updateDoc(petRef, { status: "adopted" });
 
-        // 3. Decline all other pending adopters for this pet
-        const adoptersQuery = query(collection(db, "adopters"), where("petId", "==", petId));
-        const adoptersSnapshot = await getDocs(adoptersQuery);
-        adoptersSnapshot.docs.forEach(async (docSnap) => {
-          if (docSnap.id !== adopterId) {
-            await updateDoc(doc(db, "adopters", docSnap.id), { status: "declined" });
-            const otherAdopter = docSnap.data();
-            await sendEmail(otherAdopter.emailAddress, petName, "declined");
-          }
-        });
+        console.log("Sending approval email...");
+        await sendEmailApprove(adopterEmail, adopterName, petName);
 
-        // 4. Send approval email
-        await sendEmail(adopterEmail, petName, "approved");
-
-        alert("Adoption request approved. Emails sent to all adopters.");
+        alert("Adoption request approved.");
         fetchApplications();
       } catch (error) {
-        console.error("Error approving adoption request:", error);
+        console.error("Error during approval process:", error);
       }
     }
   };
 
-  // Function to handle decline
-  const handleDecline = async (adopterId, adopterEmail, petName) => {
+  // Handle decline
+  const handleDecline = async (adopterId, adopterEmail, adopterName, petName) => {
+    console.log("Starting decline process for adopter:", {
+      adopterId,
+      adopterEmail,
+      adopterName,
+      petName,
+    });
+
     const confirmDecline = window.confirm("Are you sure you want to decline this adoption request?");
     if (confirmDecline) {
       try {
+        console.log("Updating adopter's status to 'declined'...");
         const adopterRef = doc(db, "adopters", adopterId);
         await updateDoc(adopterRef, { status: "declined" });
 
-        // Send decline email
-        await sendEmail(adopterEmail, petName, "declined");
+        console.log("Sending decline email...");
+        await sendEmailDeny(adopterEmail, adopterName, petName);
 
         alert("Adoption request has been declined.");
         fetchApplications();
       } catch (error) {
-        console.error("Error declining adoption request:", error);
+        console.error("Error during decline process:", error);
       }
     }
   };
@@ -154,7 +190,6 @@ const AdoptionList = () => {
 
   return (
     <div className="al-adoption-list-container">
-
       <h1 className="al-title">Adoption Applicant List</h1>
 
       <div className="al-summary-card">
@@ -179,7 +214,7 @@ const AdoptionList = () => {
                 <button
                   className="al-approve-btn"
                   onClick={() =>
-                    handleApprove(app.id, app.petId, app.email, app.petName)
+                    handleApprove(app.id, app.petId, app.email, app.applicantName, app.petName)
                   }
                 >
                   Approve
@@ -187,7 +222,7 @@ const AdoptionList = () => {
                 <button
                   className="al-decline-btn"
                   onClick={() =>
-                    handleDecline(app.id, app.email, app.petName)
+                    handleDecline(app.id, app.email, app.applicantName, app.petName)
                   }
                 >
                   Decline

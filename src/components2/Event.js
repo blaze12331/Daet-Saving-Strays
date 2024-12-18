@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Modal from "react-modal";
 import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Import icons
-import { collection, doc, setDoc } from "firebase/firestore";
-import { ref, set } from "firebase/database";
+import { collection, doc, setDoc, getDocs, deleteDoc, updateDoc } from "firebase/firestore";
+import { ref, set, get, remove, update } from "firebase/database";
 import { db, realtimeDB } from "../config/firebase";
 import "./Event.css";
 
@@ -14,20 +14,7 @@ const Event = () => {
   const [eventDescription, setEventDescription] = useState("");
   const [image, setImage] = useState(null);
   const [activeTab, setActiveTab] = useState("addEvents");
-  const [upcomingEvents, setUpcomingEvents] = useState([
-    {
-      title: "Tech Conference 2024",
-      date: "2024-08-15T10:00",
-      description: "A conference to discuss future technology trends.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      title: "React Workshop",
-      date: "2024-08-22T14:00",
-      description: "A hands-on workshop to learn React fundamentals.",
-      image: "https://via.placeholder.com/150",
-    },
-  ]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
@@ -81,7 +68,7 @@ const Event = () => {
       });
 
       // Update local state
-      const newEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
+      const newEvent = { id: eventId, title: eventTitle, date: eventDate, description: eventDescription, image };
       setUpcomingEvents([...upcomingEvents, newEvent]);
       resetForm();
 
@@ -91,6 +78,102 @@ const Event = () => {
       alert("Failed to add event. Please try again.");
     }
   };
+
+  const fetchEvents = async () => {
+    try {
+      const dbEvents = [];
+      const realtimeEvents = [];
+
+      const currentDate = new Date();
+
+      // Fetch db events
+      const querySnapshot = await getDocs(collection(db, "events"));
+      querySnapshot.forEach((doc) => {
+        const event = { id: doc.id, ...doc.data() };
+        if (new Date(event.date) > currentDate) {
+          dbEvents.push(event);
+        }
+      });
+
+      // Fetch Realtime Database events
+      const snapshot = await get(ref(realtimeDB, "events"));
+      if (snapshot.exists()) {
+        Object.entries(snapshot.val()).forEach(([id, event]) => {
+          if (new Date(event.date) > currentDate) {
+            realtimeEvents.push({ id, ...event });
+          }
+        });
+      }
+
+      // Combine and update the state
+      const combinedEvents = [...dbEvents, ...realtimeEvents];
+      setUpcomingEvents(combinedEvents);
+    } catch (error) {
+      console.error("Error fetching events: ", error);
+      alert("Failed to fetch events.");
+    }
+  };
+
+  const handleDelete = async (eventId) => {
+    try {
+      // Delete from db
+      await deleteDoc(doc(db, "events", eventId));
+
+      // Delete from Realtime Database
+      await remove(ref(realtimeDB, `events/${eventId}`));
+
+      // Update local state
+      setUpcomingEvents(upcomingEvents.filter((event) => event.id !== eventId));
+      alert("Event deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting event: ", error);
+      alert("Failed to delete event.");
+    }
+  };
+
+  const handleUpdate = async (eventId) => {
+    if (!eventTitle || !eventDate || !eventDescription) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    try {
+      // Update db
+      await updateDoc(doc(db, "events", eventId), {
+        title: eventTitle,
+        date: eventDate,
+        description: eventDescription,
+        imagePath: `events/${eventId}`,
+      });
+
+      // Update Realtime Database
+      await update(ref(realtimeDB, `events/${eventId}`), {
+        title: eventTitle,
+        date: eventDate,
+        description: eventDescription,
+        image: image,
+      });
+
+      // Update local state
+      setUpcomingEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.id === eventId
+            ? { ...event, title: eventTitle, date: eventDate, description: eventDescription, image }
+            : event
+        )
+      );
+
+      alert("Event updated successfully!");
+      closeModal();
+    } catch (error) {
+      console.error("Error updating event: ", error);
+      alert("Failed to update event.");
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const openModal = (event, index) => {
     setEditIndex(index);
@@ -106,24 +189,6 @@ const Event = () => {
   const closeModal = () => {
     setModalIsOpen(false);
     resetForm();
-  };
-
-  const handleModalSave = () => {
-    if (!eventTitle || !eventDate || !eventDescription) {
-      alert("Please fill all fields!");
-      return;
-    }
-    const updatedEvent = { title: eventTitle, date: eventDate, description: eventDescription, image };
-    const updatedEvents = [...upcomingEvents];
-    updatedEvents[editIndex] = updatedEvent;
-    setUpcomingEvents(updatedEvents);
-    closeModal();
-    alert("Event updated successfully!");
-  };
-
-  const handleDelete = (index) => {
-    const filteredEvents = upcomingEvents.filter((_, i) => i !== index);
-    setUpcomingEvents(filteredEvents);
   };
 
   return (
@@ -174,26 +239,23 @@ const Event = () => {
             type="datetime-local"
             className="e-event-input"
             value={eventDate}
-            onChange={(e) => setEventDate(e.target.value)}
-          />
-          <textarea
-            placeholder="EVENT DESCRIPTION"
-            className="e-event-textarea"
-            value={eventDescription}
-            onChange={(e) => setEventDescription(e.target.value)}
-          ></textarea>
-          <button className="e-save-btn" onClick={handleSave}>
-            SAVE
-          </button>
-        </div>
-      )}
-
-      {/* Upcoming Events */}
-      {activeTab === "upcomingEvents" && (
-        <div className="e-upcoming-events">
-          {upcomingEvents
-            .filter((event) => new Date(event.date) > new Date())
-            .map((event, index) => (
+            onChange={(e) => setEventDate(e.target.value)}          />
+            <textarea
+              placeholder="EVENT DESCRIPTION"
+              className="e-event-textarea"
+              value={eventDescription}
+              onChange={(e) => setEventDescription(e.target.value)}
+            ></textarea>
+            <button className="e-save-btn" onClick={handleSave}>
+              SAVE
+            </button>
+          </div>
+        )}
+  
+        {/* Upcoming Events */}
+        {activeTab === "upcomingEvents" && (
+          <div className="e-upcoming-events">
+            {upcomingEvents.map((event, index) => (
               <div className="event-card" key={index}>
                 <div className="event-image">
                   <img src={event.image || "/default-circle.png"} alt="Event" className="circle-image" />
@@ -205,59 +267,62 @@ const Event = () => {
                 </div>
                 <div className="event-icons">
                   <FaEdit className="icon" onClick={() => openModal(event, index)} />
-                  <FaTrashAlt className="icon" onClick={() => handleDelete(index)} />
+                  <FaTrashAlt className="icon" onClick={() => handleDelete(event.id)} />
                 </div>
               </div>
             ))}
-        </div>
-      )}
-
-      {/* Event Modal */}
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="e-modal">
-        <h2>Edit Event</h2>
-        <div className="e-event-form">
-          <div className="file-upload">
-            <label className="file-label" htmlFor="modal-file-input">
-              {image ? "Change Image" : "+ Upload Image"}
-            </label>
-            <input
-              id="modal-file-input"
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImageChange}
-              accept="image/*"
-            />
-            {image && <img src={image} alt="Uploaded Preview" className="preview-image" />}
           </div>
-          <input
-            type="text"
-            placeholder="EVENT TITLE"
-            className="e-event-input"
-            value={eventTitle}
-            onChange={(e) => setEventTitle(e.target.value)}
-          />
-          <input
-            type="datetime-local"
-            className="e-event-input"
-            value={eventDate}
-            onChange={(e) => setEventDate(e.target.value)}
-          />
-          <textarea
-            placeholder="EVENT DESCRIPTION"
-            className="e-event-textarea"
-            value={eventDescription}
-            onChange={(e) => setEventDescription(e.target.value)}
-          ></textarea>
-          <button className="e-save-btn" onClick={handleModalSave}>
-            SAVE CHANGES
-          </button>
-          <button className="e-cancel-btn" onClick={closeModal}>
-            CLOSE
-          </button>
-        </div>
-      </Modal>
-    </div>
-  );
-};
-
-export default Event;
+        )}
+  
+        {/* Event Modal */}
+        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="e-modal">
+          <h2>Edit Event</h2>
+          <div className="e-event-form">
+            <div className="file-upload">
+              <label className="file-label" htmlFor="modal-file-input">
+                {image ? "Change Image" : "+ Upload Image"}
+              </label>
+              <input
+                id="modal-file-input"
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+              {image && <img src={image} alt="Uploaded Preview" className="preview-image" />}
+            </div>
+            <input
+              type="text"
+              placeholder="EVENT TITLE"
+              className="e-event-input"
+              value={eventTitle}
+              onChange={(e) => setEventTitle(e.target.value)}
+            />
+            <input
+              type="datetime-local"
+              className="e-event-input"
+              value={eventDate}
+              onChange={(e) => setEventDate(e.target.value)}
+            />
+            <textarea
+              placeholder="EVENT DESCRIPTION"
+              className="e-event-textarea"
+              value={eventDescription}
+              onChange={(e) => setEventDescription(e.target.value)}
+            ></textarea>
+            <button
+              className="e-save-btn"
+              onClick={() => handleUpdate(upcomingEvents[editIndex]?.id)}
+            >
+              SAVE CHANGES
+            </button>
+            <button className="e-cancel-btn" onClick={closeModal}>
+              CLOSE
+            </button>
+          </div>
+        </Modal>
+      </div>
+    );
+  };
+  
+  export default Event;
