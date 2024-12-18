@@ -137,8 +137,6 @@ const DonatePage = () => {
                 onChange={handleInputChange}
               >
                 <option value="gcash">GCash</option>
-                <option value="paypal">PayPal</option>
-                <option value="bank">Bank Transfer</option>
               </select>
             </label>
             <button className="close-btn" onClick={closeModal}>

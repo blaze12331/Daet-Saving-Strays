@@ -1,0 +1,42 @@
+.donation-container {
+    margin: 2rem auto;
+    max-width: 1000px;
+    text-align: center; /* Centers the content inside the container */
+  }
+  
+  .record-table {
+    margin: 2rem auto;
+    max-width: 1300px;
+    width: 100%; /* Ensures the table takes up full width of its container */
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th,
+  td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #8c5f36;
+    color: white;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8c5f36;
+    font-size: 1.2rem;
+  }
+  

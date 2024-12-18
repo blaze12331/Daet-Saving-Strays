@@ -15,6 +15,7 @@ import Event from "./components2/Event";
 import AdoptionList from "./components2/AdoptionList";
 import History from "./components2/History";
 import Header1 from "./components2/Header1"; // Ensure Header1 is imported
+import DonationRecords from "./components2/DonationRecords";
 
 const App = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -54,7 +55,7 @@ const App = () => {
             element={
               <>
               <LoginForm />
-                <Header1 />
+
                 
               </>
             }
@@ -92,6 +93,15 @@ const App = () => {
               <>
                 <Header1 />
                 <History />
+              </>
+            }
+          />
+          <Route
+            path="/donation-records"
+            element={
+              <>
+                <Header1 />
+                <DonationRecords />
               </>
             }
           />

@@ -277,35 +277,33 @@
 .close-btn:hover {
   background-color: #bbb;
 }
+/* Radio Button Group Styling */
 .radio-group {
   display: flex;
-  justify-content: center; /* Center the radio buttons and labels horizontally */
-  gap: 2rem; /* Add spacing between "No" and "Yes" groups */
-  margin-top: 0.5rem;
-}
-
-.radio-group {
-  display: flex;
-  justify-content: center; /* Center the radio buttons horizontally */
-  gap: 4rem; /* Adds space between No and Yes groups */
+  justify-content: center; /* Align group content to the left */
+  align-items: center;
+  gap: 1.5rem; /* Space between "Yes" and "No" options */
   margin-top: 0.5rem;
 }
 
 .radio-group label {
   display: flex;
-  align-items: center; /* Vertically center text and radio button */
-  gap: 0.5rem; /* Add space between radio button and label */
+  flex-direction: row-reverse; /* Text on the left of the radio button */
+  align-items: center; /* Align vertically */
+  gap: 0.5rem; /* Space between text and button */
+  font-size: 1rem; /* Text size */
+  cursor: pointer;
 }
 
-.reverse-radio {
-  flex-direction: row-reverse; /* Reverse text and radio button for No */
-  text-align: right; /* Ensure "No" text aligns to the right of its button */
+.radio-group input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
 
-.normal-radio {
-  flex-direction: row; /* Default: text to the right of radio button */
-  text-align: left; /* Align "Yes" text to the left of its button */
-}
+
+
+
 /* Form Input and Select Styling */
 .form-group input,
 .form-group select {

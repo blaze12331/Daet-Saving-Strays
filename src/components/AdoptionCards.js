@@ -270,11 +270,10 @@ const AdoptionCards = () => {
 
 
 
-            {/* Radio Buttons */}
             <div className="form-group">
   <label>Does anyone in the family have a known allergy to dogs?</label>
   <div className="radio-group">
-    <label className="reverse-radio">
+    <label>
       No
       <input
         type="radio"
@@ -284,7 +283,8 @@ const AdoptionCards = () => {
         onChange={(e) => setFormData({ ...formData, allergyToDogs: e.target.value })}
       />
     </label>
-    <label className="normal-radio">
+    <label>
+      Yes
       <input
         type="radio"
         name="allergyToDogs"
@@ -292,7 +292,6 @@ const AdoptionCards = () => {
         checked={formData.allergyToDogs === 'Yes'}
         onChange={(e) => setFormData({ ...formData, allergyToDogs: e.target.value })}
       />
-      Yes
     </label>
   </div>
 </div>
@@ -300,7 +299,7 @@ const AdoptionCards = () => {
 <div className="form-group">
   <label>Is everyone in agreement with the decision to adopt a dog?</label>
   <div className="radio-group">
-    <label className="reverse-radio">
+    <label>
       No
       <input
         type="radio"
@@ -310,7 +309,8 @@ const AdoptionCards = () => {
         onChange={(e) => setFormData({ ...formData, familyAgreement: e.target.value })}
       />
     </label>
-    <label className="normal-radio">
+    <label>
+      Yes
       <input
         type="radio"
         name="familyAgreement"
@@ -318,7 +318,6 @@ const AdoptionCards = () => {
         checked={formData.familyAgreement === 'Yes'}
         onChange={(e) => setFormData({ ...formData, familyAgreement: e.target.value })}
       />
-      Yes
     </label>
   </div>
 </div>
@@ -326,7 +325,7 @@ const AdoptionCards = () => {
 <div className="form-group">
   <label>Do you have time to provide adequate love and attention?</label>
   <div className="radio-group">
-    <label className="reverse-radio">
+    <label>
       No
       <input
         type="radio"
@@ -336,7 +335,8 @@ const AdoptionCards = () => {
         onChange={(e) => setFormData({ ...formData, canProvideAttention: e.target.value })}
       />
     </label>
-    <label className="normal-radio">
+    <label>
+      Yes
       <input
         type="radio"
         name="canProvideAttention"
@@ -344,7 +344,6 @@ const AdoptionCards = () => {
         checked={formData.canProvideAttention === 'Yes'}
         onChange={(e) => setFormData({ ...formData, canProvideAttention: e.target.value })}
       />
-      Yes
     </label>
   </div>
 </div>

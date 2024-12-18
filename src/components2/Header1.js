@@ -52,11 +52,17 @@ const Header = () => {
         >
           History
         </Link>
+        <Link
+          to="/donation-records" // Adjust path as per your routing setup
+          className={activeLink === "donation-records" ? "active" : ""}
+          onClick={() => setActiveLink("donation-records")}
+        >
+          Donation Records
+        </Link>
       </nav>
-      <div className="user-actions">
-        <div className="profile-icon"></div>
+
+
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
-      </div>
     </header>
   );
 };
